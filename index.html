@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            background-color: lightblue;
+        }
+        .container .row{
+            display: flex;
+            justify-content: center;
+        }
+        .container .row .square{
+            background-color: blue;
+            padding: 15px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button id="erase">Erase Table</button>
+    </div>
+    <div class="container"></div>
+    <script>
+        const container = document.querySelector('.container');
+        function createGrid(dim){
+            for(let i=0;i<dim;i++){
+            const row = document.createElement('div');
+            row.classList.add('row');
+            container.appendChild(row);
+                for(let j=0;j<dim;j++){
+                    const square = document.createElement('div');
+                    square.classList.add('square');
+                    row.appendChild(square);
+                }
+            }
+        }
+        var dim = parseInt(window.prompt('Enter the dimension'));
+        if(dim > 100){
+            alert('too big table!');
+        }
+        else{
+            createGrid(dim);
+        }
+        let mouse = false;
+        document.body.onmousedown = () => {mouse = true;}
+        document.body.onmouseup = () => {mouse = false;}
+        const squares = document.querySelectorAll('.square');
+        squares.forEach(square => {
+            square.addEventListener('mousemove', () =>{
+                if(mouse){
+                    square.style.backgroundColor = 'black';
+                }
+            });
+        });
+        const erase = document.querySelector('#erase');
+        erase.addEventListener('click', () => {
+            squares.forEach(square => {
+                square.style.backgroundColor = "blue";
+            });
+            document.location.reload();
+        });
+    </script>
+</body>
+</html>
